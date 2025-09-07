@@ -8,21 +8,22 @@
   </head>
   <body>
     <!-- Calculator -->
-     <h1 id="Display">Display</h1>
-     <div class="buttons-container">
-      <button id="button1" onclick="pressNumber(1)">1</button>
-      <button id="button2" onclick="pressNumber(2)">2</button>
-      <button id="button3">3</button>
-      <button id="button4">4</button>
-      <button id="button5">5</button>
-      <button id="button6">6</button>
-      <button id="button7">7</button>
-      <button id="button8">8</button>
-      <button id="button9">9</button>
-      <button id="button-star">*</button>
-      <button id="Add" onclick="oppAdd()">+</button>
-      <button id="Calculate" onclick="calc()">=</button>
-      <button id="Reset" onclick="del()">del</button>
+     <input type="text" id="display" readonly>
+     <div id="buttons-container">
+      <button id="1" value="1">1</button>
+      <button id="2" >2</button>
+      <button id="3">3</button>
+      <button id="4">4</button>
+      <button id="5">5</button>
+      <button id="6">6</button>
+      <button id="7">7</button>
+      <button id="8">8</button>
+      <button id="9">9</button>
+      <button id="*">*</button>
+      <button id="+">+</button>
+      <button id="-">-</button>
+      <button id="=">=</button>
+      <button id="del" onclick="del()">del</button>
      </div>
   </body>
   <script src="Calculator.js"></script>
