@@ -1,85 +1,59 @@
-let displayInput = document.getElementById("display");
-let prValue = [];
-let display = [];
-let justCalculated = true;
-let addCheck = false;
-let addCount = 1;
-let op;
+let display = document.querySelector("#display");
+let buttons = document.querySelector("#buttons");
+let justCalculated = false;
+let operatorCheck = false;
 let crValue = "";
-let buttons = document.getElementById("buttons-container");
-
+let delNew = "";
+let calc = () => {
+  try {
+    let result = eval(crValue);
+    if (result % 1 != 0) {
+      fixed = result.toFixed(2);
+      display.value = fixed;
+    } else {
+      display.value = result;
+      justCalculated = true;
+    }
+  } catch (err) {
+    display.value = "Error";
+    crValue = "";
+  }
+};
+let del = () => {
+  
+  crValue = crValue.slice(0, -1);
+  console.log(`Deleted value: ${crValue}`);
+  display.value = crValue;
+}
 buttons.addEventListener("click", (e) => {
-  switch (e.target.id) {
-    case "1":
-      numberPressed(1);
-      break;
-    case "2":
-      numberPressed(2);
-      break;
-    case "3":
-      numberPressed(3);
-      break;
-    case "4":
-      numberPressed(4);
-      break;
-    case "+":
-      add();
-      break;
-    case "=":
-      if (crValue != "") {
-        prValue.push(crValue);
+  if (e.target.tagName == "BUTTON") {
+    e.preventDefault();
+    let value = e.target.innerHTML;
+    if (value === "=") {
+      calc();
+    } else if (
+      value === "+" ||
+      value === "-" ||
+      value === "*" ||
+      value === "/"
+    ) {
+      if (operatorCheck) {
+        crValue = crValue.slice(0, -1);
+      } else {
+        operatorCheck = true;
+      }
+      crValue += value;
+      display.value = crValue;
+    } else if (value === 'del') {
+      del();
+    } else {
+      if (justCalculated) {
         crValue = "";
+        justCalculated = false;
       }
-      if (addCheck) {
-        op = "+";
-        displayInput.value = calc(op);
-        justCalculated = true;
-      }
-      break;
-
-    default:
-      break;
+      operatorCheck = false;
+      crValue += value;
+      display.value = crValue;
+    }
   }
 });
-let resultOut = [];
-function numberPressed(num) {
-  if (justCalculated) {
-    crValue = `${num}`;
-    display = `${num}`;
-    prValue = [];
-    justCalculated = false;
-  } else {
-    display += num;
-    crValue += num;
-  }
-  op = "";
-  displayInput.value = display;
-}
-function calc(act) {
-  if (act === "+") {
-    add();
-    let resultAdd = 0;
-    for (let i = 0; i < prValue.length; i++) {
-      resultAdd = resultAdd + Number(prValue[i]);
-    }
-    return resultAdd;
-  }
-}
-function add() {
-  if (crValue != "") {
-    prValue.push(crValue);
-  }
-  if (op !== "+") {
-    display += "+";
-    displayInput.value = display;
-  }
-  addCheck = true;
-  op = "+";
-  crValue = "";
-}
-function del() {
-  let lastValue = prValue.pop();
-  let value = lastValue.slice(0, -1);
-  console.log(value);
-  prValue.push(value);
-}
